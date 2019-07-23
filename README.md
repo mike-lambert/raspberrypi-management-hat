@@ -11,7 +11,7 @@ It intended to provide the next hardware capabilities.
 - Overheat LED
 - "Shutdown initiated" LED
 - "IP Link established" LED
-- "TOR Link established" LED as special requirement for my own "Tor anonymizing Wi-Fi hotspot" project
+- "TOR Link established" LED as special requirement for my own ["Tor anonymizing Wi-Fi hotspot" project](https://tor-assets.s3.eu-central-1.amazonaws.com/RaspberryPi-3-TorWiFi-20190721.7z)
 
 Obviously, all buttons could be extended to dry contacts of driving relays, and LEDs - for driving relays, which making hat useful to monitor Raspberry status using simple discrete wires.
 
