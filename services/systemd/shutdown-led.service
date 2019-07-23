@@ -1,0 +1,11 @@
+[Unit]
+Description=Shutdown pulse
+DefaultDependencies=no
+After=final.target
+
+[Service]
+ExecStart=/opt/rpi-utils/shutdown-led
+Type=oneshot
+
+[Install]
+WantedBy=final.target

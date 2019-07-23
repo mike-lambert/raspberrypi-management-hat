@@ -1,0 +1,29 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:          heartbeat-led
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+### END INIT INFO
+
+# If you want a command to always run, put it here
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting heartbeat-led"
+    /opt/rpi-utils/heartbeat-led 10 &
+    ;;
+  stop)
+    echo "Stopping heartbeat-led"
+    pkill -f /opt/rpi-utils/heartbeat-led
+    ;;
+  *)
+    echo "Usage: /etc/init.d/heartbeat-led-service {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

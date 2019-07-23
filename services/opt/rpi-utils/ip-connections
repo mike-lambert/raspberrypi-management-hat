@@ -1,0 +1,52 @@
+#!/usr/bin/python
+import netifaces;
+import time;
+import RPi.GPIO as GPIO
+import subprocess;
+
+LED = 22
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(LED, GPIO.OUT)
+
+def enumerate():
+  interfaces = netifaces.interfaces();
+  result = []
+  for interface in interfaces:
+    if interface == 'lo':
+      continue;
+    if interface.startswith('wlan'):
+      continue;
+    config = {'id': interface, 'v4': None, 'v6': None, 'mac': None};
+    addrs = netifaces.ifaddresses(interface).get(netifaces.AF_INET)
+    linkaddrs = netifaces.ifaddresses(interface).get(netifaces.AF_LINK)
+    try:
+      ips = [addr.get("addr") for addr in addrs][0]
+      config['v4'] = ips;
+    except:
+      pass;
+    hws = [addr.get("addr") for addr in linkaddrs][0]
+    config['mac'] = hws;
+    result.append(config);
+  return result;
+
+if __name__ == '__main__':
+  started = False
+  while True:
+    wan = enumerate();
+    count = 0
+    for entry in wan:
+      if entry['v4']:
+        print entry['id'] + '\t' + entry['mac'] + '\t' + entry['v4']
+        count = count + 1
+    if count > 0:
+      GPIO.output(LED, GPIO.HIGH)
+      if not started:
+        started = True
+        subprocess.call(['service','tor', 'restart'], shell=False)
+    else:
+      GPIO.output(LED, GPIO.LOW)
+      if started:
+        started = False
+        subprocess.call(['service','tor', 'stop'], shell=False)
+    time.sleep(1)

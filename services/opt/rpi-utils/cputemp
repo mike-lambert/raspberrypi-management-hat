@@ -1,0 +1,29 @@
+#!/usr/bin/python
+import os
+import time
+import RPi.GPIO as GPIO
+
+LED = 9
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(LED, GPIO.OUT)
+
+
+def measure_temp():
+  temp = os.popen("vcgencmd measure_temp").readline()
+  return float(temp.replace("temp=","").replace("'C", "").replace("\n", ""))
+
+if __name__ == '__main__':
+  th_hot = 75
+  th_cold = 70
+  is_heat = False
+  while True:
+    t =  measure_temp();
+    print str(t)
+    if is_heat and t < th_cold:
+      is_heat = False
+      GPIO.output(LED, GPIO.LOW)
+    if not is_heat and t > th_hot:
+      is_heat = True
+      GPIO.output(LED, GPIO.HIGH)
+    time.sleep(1)
