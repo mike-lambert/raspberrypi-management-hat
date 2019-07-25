@@ -1,0 +1,9 @@
+GPIO2  to GND - "Reboot" button
+GPIO3  to GND - "ACPI On/Off" button
+
+GPIO9  to GND - "Overheat" LED
+GPIO11 to GND - "Shutdown pulse" LED
+GPIO10 to GND - "Heartbeat" LED
+GPIO22 to GND - "Internet connected" LED
+GPIO27 to GND - "Tor circuit opened" LED
+GPIO17 to GND - "OS boot completed" LED
